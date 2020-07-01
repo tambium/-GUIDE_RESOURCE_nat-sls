@@ -1,0 +1,7 @@
+.serverless
+
+.vscode
+
+node_modules/
+
+*.pem
