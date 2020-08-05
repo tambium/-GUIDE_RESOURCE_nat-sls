@@ -4,4 +4,4 @@ Properties:
     Ref: ServerlessVPC
   Tags:
     - Key: Name
-      Value: bastion-route
+      Value: outgoing route table

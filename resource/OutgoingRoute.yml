@@ -4,4 +4,4 @@ Properties:
   GatewayId:
     Ref: ServerlessInternetGateway
   RouteTableId:
-    Ref: BastionRouteTable
+    Ref: OutgoingRouteTable
