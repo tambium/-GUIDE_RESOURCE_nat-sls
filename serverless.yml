@@ -2,7 +2,6 @@ service: nat-sls
 
 provider:
   name: aws
-  apiName: nat_api
   region: eu-west-1
   stage: dev
   memorySize: 256
@@ -22,31 +21,31 @@ resources:
     ServerlessSubnetA: ${file(./resource/ServerlessSubnetA.yml)}
     ServerlessSubnetB: ${file(./resource/ServerlessSubnetB.yml)}
     ServerlessSubnetC: ${file(./resource/ServerlessSubnetC.yml)}
-    ServerlessSubnetGroup: ${file(./resource/ServerlessSubnetGroup.yml)}
     ServerlessInternetGateway: ${file(./resource/ServerlessInternetGateway.yml)}
-    # ServerlessSecurityGroup: ${file(./resource/ServerlessSecurityGroup.yml)}
-    BastionRouteTable: ${file(./resource/BastionRouteTable.yml)}
-    BastionRoute: ${file(./resource/BastionRoute.yml)}
+    OutgoingRouteTable: ${file(./resource/OutgoingRouteTable.yml)}
+    OutgoingRoute: ${file(./resource/OutgoingRoute.yml)}
     PublicSubnet: ${file(./resource/PublicSubnet.yml)}
     PublicSubnetAssociation: ${file(./resource/PublicSubnetAssociation.yml)}
-    # PostgreSqlRDSInstance: ${file(./resource/PostgreSqlRDSInstance.yml)}
-    NatInstance: ${file(./resource/NatInstance.yml)}
-    # BastionSSH: ${file(./resource/BastionSSH.yml)}
-    # DBSSH: ${file(./resource/DBSSH.yml)}
-    # BastionConnectivity: ${file(./resource/BastionConnectivity.yml)}
+    # NatInstance: ${file(./resource/NatInstance.yml)}
+    # NatInstanceSG: ${file(./resource/NatInstanceSG.yml)}
+    # NatRoute: ${file(./resource/NatRoute.yml)}
+    # PrivateSRTA: ${file(./resource/PrivateSRTA.yml)}
+    # PrivateSRTB: ${file(./resource/PrivateSRTB.yml)}
+    # PrivateSRTC: ${file(./resource/PrivateSRTC.yml)}
+    # PrivateRouteTable: ${file(./resource/PrivateRouteTable.yml)}
 
 functions:
-  graphql:
-    vpc:
-      securityGroupIds:
-        - !GetAtt LambdaSecurityGroup.GroupId
-      subnetIds:
-        - Ref: ServerlessSubnetA
-        - Ref: ServerlessSubnetB
-        - Ref: ServerlessSubnetC
+  nat:
+    # vpc:
+    #   securityGroupIds:
+    #     - !GetAtt LambdaSecurityGroup.GroupId
+    #   subnetIds:
+    #     - Ref: ServerlessSubnetA
+    #     - Ref: ServerlessSubnetB
+    #     - Ref: ServerlessSubnetC
     handler: src/index.handler
     events:
       - http:
-          path: /testFn
+          path: /nat
           method: get
           cors: true

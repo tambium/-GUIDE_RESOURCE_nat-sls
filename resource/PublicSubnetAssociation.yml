@@ -1,6 +1,6 @@
 Type: AWS::EC2::SubnetRouteTableAssociation
 Properties:
   RouteTableId:
-    Ref: BastionRouteTable
+    Ref: OutgoingRouteTable
   SubnetId:
     Ref: PublicSubnet
