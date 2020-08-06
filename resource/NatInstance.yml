@@ -1,4 +1,5 @@
 Type: AWS::EC2::Instance
+Condition: IsDev
 Properties:
   ImageId: ami-06ce3edf0cff21f07
   InstanceType: t2.micro

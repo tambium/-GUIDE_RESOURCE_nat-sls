@@ -1,8 +1,9 @@
 Type: AWS::EC2::Route
-Condition: IsDev
+Condition: IsProd
+DependsOn: NatGateway
 Properties:
   DestinationCidrBlock: 0.0.0.0/0
-  InstanceId:
-    Ref: NatInstance
+  NatGatewayId:
+    Ref: NatGateway
   RouteTableId:
     Ref: PrivateRouteTable

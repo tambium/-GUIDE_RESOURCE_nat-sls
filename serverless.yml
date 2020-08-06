@@ -13,6 +13,15 @@ package:
   individually: true
 
 resources:
+  Conditions:
+    IsProd:
+      Fn::Equals:
+        - ${opt:stage, self:provider.stage}
+        - prod
+    IsDev:
+      Fn::Equals:
+        - ${opt:stage, self:provider.stage}
+        - dev
   Resources:
     LambdaRole: ${file(./resource/LambdaRole.yml)}
     LambdaSecurityGroup: ${file(./resource/LambdaSecurityGroup.yml)}
@@ -26,23 +35,27 @@ resources:
     OutgoingRoute: ${file(./resource/OutgoingRoute.yml)}
     PublicSubnet: ${file(./resource/PublicSubnet.yml)}
     PublicSubnetAssociation: ${file(./resource/PublicSubnetAssociation.yml)}
-    # NatInstance: ${file(./resource/NatInstance.yml)}
-    # NatInstanceSG: ${file(./resource/NatInstanceSG.yml)}
-    # NatRoute: ${file(./resource/NatRoute.yml)}
-    # PrivateSRTA: ${file(./resource/PrivateSRTA.yml)}
-    # PrivateSRTB: ${file(./resource/PrivateSRTB.yml)}
-    # PrivateSRTC: ${file(./resource/PrivateSRTC.yml)}
-    # PrivateRouteTable: ${file(./resource/PrivateRouteTable.yml)}
+    NatInstance: ${file(./resource/NatInstance.yml)}
+    NatInstanceSG: ${file(./resource/NatInstanceSG.yml)}
+    NatRoute: ${file(./resource/NatRoute.yml)}
+    PrivateSRTA: ${file(./resource/PrivateSRTA.yml)}
+    PrivateSRTB: ${file(./resource/PrivateSRTB.yml)}
+    PrivateSRTC: ${file(./resource/PrivateSRTC.yml)}
+    PrivateRouteTable: ${file(./resource/PrivateRouteTable.yml)}
+
+    NatEIP: ${file(./resource/NatEIP.yml)}
+    NatGateway: ${file(./resource/NatGateway.yml)}
+    NatGatewayRoute: ${file(./resource/NatGatewayRoute.yml)}
 
 functions:
   nat:
-    # vpc:
-    #   securityGroupIds:
-    #     - !GetAtt LambdaSecurityGroup.GroupId
-    #   subnetIds:
-    #     - Ref: ServerlessSubnetA
-    #     - Ref: ServerlessSubnetB
-    #     - Ref: ServerlessSubnetC
+    vpc:
+      securityGroupIds:
+        - !GetAtt LambdaSecurityGroup.GroupId
+      subnetIds:
+        - Ref: ServerlessSubnetA
+        - Ref: ServerlessSubnetB
+        - Ref: ServerlessSubnetC
     handler: src/index.handler
     events:
       - http:
